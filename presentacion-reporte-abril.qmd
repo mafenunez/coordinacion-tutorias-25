@@ -383,7 +383,7 @@ psico %>%
                 )
 ```
 
-# [**Psicología**]{.purple}<br> <br>[ % de casos según **modalidad** y ***mes de atención**]{.black}{data-background-color="#CABFFF"}
+# [**Psicología**]{.purple}<br> <br>[ % de casos según **modalidad** y **mes de atención**]{.black}{data-background-color="#CABFFF"}
 ## 
 
 ```{r}
@@ -453,3 +453,103 @@ psico %>%
                 )
 
 ```
+
+
+# [**Solicitudes**]{.purple}
+```{r}
+soli <- read.csv("input/soli.csv") %>% clean_names()
+
+tipo_de_atencion = round(prop.table(table(categorias=soli$tipo_de_atencion)),2) 
+tipo_de_atencion = as.data.frame(tipo_de_atencion)
+#tipo_de_atencion$categorias <- factor(tipo_de_atencion$categorias, levels = c(1, 2), labels = c("Tutoría Individual", "Tutoría Grupal")) 
+plot_tipo_de_atencion<-ggplot(tipo_de_atencion,aes(x=2,y=-Freq, fill=categorias))+  
+  geom_bar(stat = "identity",  
+           color="white")+    
+  geom_text(aes(label = scales::percent(Freq)),  
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+  
+  theme_void()+  
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5) +  
+  labs(title="Tipo" ) 
+
+carrera = round(prop.table(table(categorias=soli$carrera)),2) 
+carrera = as.data.frame(carrera)
+#carrera$categorias <- factor(carrera$categorias, levels = c(1, 2), labels = c("Tutoría Individual", "Tutoría Grupal")) 
+plot_carrera<-ggplot(carrera,aes(x=2,y=-Freq, fill=categorias))+  
+  geom_bar(stat = "identity",  
+           color="white")+    
+  geom_text(aes(label = scales::percent(Freq)),  
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+  
+  theme_void()+  
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5) +  
+  labs(title="Carrera" ) 
+
+motivo = round(prop.table(table(categorias=soli$x_a_cual_de_las_siguientes_categorias_se_relaciona_tu_motivo_de_consulta_tutorial)),2) 
+motivo = as.data.frame(motivo)
+#carrera$categorias <- factor(carrera$categorias, levels = c(1, 2), labels = c("Tutoría Individual", "Tutoría Grupal")) 
+plot_motivo<-ggplot(motivo,aes(x=2,y=-Freq, fill=categorias))+  
+  geom_bar(stat = "identity",  
+           color="white")+    
+  geom_text(aes(label = scales::percent(Freq)),  
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+  
+  theme_void()+  
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5) +  
+  labs(title="Temática" ) 
+
+
+```
+
+## [Solicitudes por carrera]{.purple}
+
+```{r}
+plot_carrera
+```
+
+## [Solicitues por tipo de atención]{.purple}
+```{r}
+plot_tipo_de_atencion
+```
+
+## [Solicitudes por temática]{.purple}
+```{r}
+plot_motivo
+```
+
+##
+<div style="font-size: 80%;">
+```{r}
+
+soli$carrera <- set_label(x = soli$carrera,label = 
+                                                   "Carrera")
+soli$tipo_de_atencion <- set_label(x = soli$tipo_de_atencion,label = 
+                                                   "Tipo")
+
+soli %>%
+  sjPlot::sjtab(carrera,
+                tipo_de_atencion,
+                encoding = "UFT-8",
+                show.col.prc = TRUE
+                )
+```
+## 
+<div style="font-size: 80%;">
+```{r}
+soli$x_a_cual_de_las_siguientes_categorias_se_relaciona_tu_motivo_de_consulta_tutorial <- set_label(x = soli$x_a_cual_de_las_siguientes_categorias_se_relaciona_tu_motivo_de_consulta_tutorial,label = 
+                                                   "Temática")
+
+soli %>%
+  sjPlot::sjtab(carrera,
+                x_a_cual_de_las_siguientes_categorias_se_relaciona_tu_motivo_de_consulta_tutorial,
+                encoding = "UFT-8",
+                show.col.prc = TRUE
+                )
+```
+
