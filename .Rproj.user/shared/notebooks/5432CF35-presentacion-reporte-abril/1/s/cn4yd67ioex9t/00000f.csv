@@ -1,0 +1,9 @@
+"0","ts %>%
+  sjPlot::sjtab(Modalidad,
+                Temática,
+                encoding = ""UFT-8"",
+                show.col.prc = TRUE
+                )
+"
+"2","Error in rowSums(tab) : 'x' must be an array of at least two dimensions
+"

@@ -1,0 +1,153 @@
+---
+tpagetitle: "Análisis Abril"
+author: "Coordinación"
+
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    R.options:
+      knitr.graphics.auto_pdf: true
+      
+format: 
+  revealjs:
+    logo: images/Imagen2.png
+    slide-number: true
+    theme: [pp.scss]
+    title-slide-attributes:
+      visibility: false
+#      data-background-image: images/portada.jpg
+#      data-background-size: cover
+    auto-play-media: true
+
+
+editor:
+  render-on-save: true
+---
+
+## {data-background-color="#CABFFF"}
+
+:::: {.columns .v-center-container}
+::: {.column width=40%}
+![](images/Imagen3.png){width="80%" fig-align="right"} <br>
+
+![](images/Imagen2.png){width="80%" fig-align="left"}
+
+:::
+::: {.column width=60%}
+## [***[Análisis Abril]{.purple}*** <br> Casos reportados en la planilla de seguimiento]{.black}
+
+------------------------------------------------------------------------
+
+
+María Fernanda Núñez y Catalina Poblete
+<br>
+*Coordinadoras equipo de tutores* 
+
+:::
+::::
+
+```{r, echo=FALSE}
+pacman::p_load(readr, tidyverse, dplyr, sjmisc, car, sjlabelled, stargazer, haven)
+
+antropo <- read_csv("input/antropo.csv")
+socio <- read_csv("input/socio.csv")
+pep <- read_csv("input/pep.csv")
+ts <- read_csv("input/ts.csv")
+psico <- read_csv("input/psico.csv")
+```
+
+# [Antropología]{.purple} <br> [ % de casos según modalidad y motivo]{.black}{data-background-color="#CABFFF"}
+
+
+##
+
+<div style="font-size: 70%;">
+
+```{r}
+
+antropo$Modalidad <- set_label(x = antropo$Modalidad,label = 
+                                                   "Modalidad")
+
+
+antropo$Temática <- set_label(x = antropo$Temática,label = 
+                                 "Temática")
+
+antropo %>%
+  sjPlot::sjtab(Modalidad,
+                Temática,
+                #encoding = "UFT-8",
+                show.col.prc = TRUE
+                )
+```
+
+
+
+# [Sociología]{.purple}<br> [ % de casos según modalidad y motivo]{.black}{data-background-color="#CABFFF"}
+
+
+## 
+```{r, echo=FALSE}
+
+socio$Modalidad <- set_label(x = socio$Modalidad,label = 
+                                                   "Modalidad")
+
+
+socio$Temática <- set_label(x = socio$Temática,label = 
+                                 "Temática")
+socio %>%
+  sjPlot::sjtab(Modalidad,
+                Temática,
+                encoding = "UFT-8",
+                show.col.prc = TRUE
+                )
+```
+
+# [Pedagogía en Educación Parvularia]{.purple} <br> [ % de casos según modalidad y motivo]{.black}{data-background-color="#CABFFF"}
+
+##
+```{r, echo=FALSE}
+pep$Modalidad <- set_label(x = pep$Modalidad,label = 
+                                                   "Modalidad")
+
+
+pep$Temática <- set_label(x = pep$Temática,label = 
+                                 "Temática")
+pep %>%
+  sjPlot::sjtab(Modalidad,
+                Temática,
+                encoding = "UFT-8",
+                show.col.prc = TRUE
+                )
+```
+
+# Trabajo Social {data-background-color="#CABFFF"}
+
+
+```{r, echo=FALSE}
+#ts %>%
+#  sjPlot::sjtab(Modalidad,
+ #               Temática,
+  #              encoding = "UFT-8",
+   #             show.col.prc = TRUE
+    #            )
+```
+
+# [Psicología]{.purple} <br> [ % de casos según modalidad y motivo]{.black}{data-background-color="#CABFFF"}
+
+## 
+```{r, echo=FALSE}
+
+psico$Modalidad <- set_label(x = psico$Modalidad,label = 
+                                                   "Modalidad")
+
+
+psico$Temática <- set_label(x = psico$Temática,label = 
+                                 "Temática")
+psico %>%
+  sjPlot::sjtab(Modalidad,
+                Temática,
+                encoding = "UFT-8",
+                show.col.prc = TRUE
+                )
+```
